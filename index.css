@@ -1,199 +1,188 @@
-/* ======= FLUXIUM DARK MINIMAL ======= */
+<style>
+  /* ===== BASE ===== */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #0f172a;
-  color: #e2e8f0;
-  transition: background 0.4s ease, color 0.4s ease;
-}
+  body {
+    font-family: "Inter", sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: opacity 0.8s ease;
+    opacity: 0;
+  }
 
-/* ===== CABEÇALHO ===== */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #1e293b;
-  padding: 10px 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid #334155;
-}
+  body.loaded {
+    opacity: 1;
+  }
 
-header h1 {
-  font-size: 20px;
-  color: #60a5fa;
-  letter-spacing: 1px;
-}
+  /* ===== CONTAINER PRINCIPAL ===== */
+  .container {
+    position: relative;
+    background: #1e293b;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    width: 90%;
+    max-width: 400px;
+    padding: 40px 30px;
+    overflow: hidden;
+    min-height: 430px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-nav {
-  display: flex;
-  gap: 8px;
-}
+  /* ===== CABEÇALHO ===== */
+  h1 {
+    color: #60a5fa;
+    margin-bottom: 25px;
+    font-weight: 600;
+  }
 
-.tab-btn {
-  background: #1e293b;
-  border: 1px solid #334155;
-  color: #94a3b8;
-  padding: 8px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+  /* ===== CAMPOS ===== */
+  input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    font-size: 15px;
+    background: #334155;
+    color: #f8fafc;
+    transition: background 0.3s;
+  }
 
-.tab-btn:hover {
-  background: #334155;
-  color: #e2e8f0;
-}
+  input:focus {
+    background: #475569;
+  }
 
-.tab-btn.active {
-  background: #3b82f6;
-  color: #fff;
-  border-color: #2563eb;
-}
+  /* ===== BOTÕES ===== */
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+  }
 
-.logout-btn {
-  background: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
+  #loginBtn {
+    background: #3b82f6;
+    color: white;
+  }
 
-.logout-btn:hover {
-  background: #dc2626;
-}
+  #loginBtn:hover {
+    background: #2563eb;
+  }
 
-/* ===== CONTEÚDO ===== */
-main {
-  max-width: 800px;
-  margin: 20px auto;
-  background: #1e293b;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-  border: 1px solid #334155;
-}
+  #goCadastroBtn,
+  #goLoginBtn {
+    background: transparent;
+    color: #60a5fa;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    text-decoration: underline;
+  }
 
-h2 {
-  margin-bottom: 15px;
-  border-left: 4px solid #3b82f6;
-  padding-left: 10px;
-  color: #e2e8f0;
-}
+  #cadastroBtn {
+    background: #22c55e;
+    color: white;
+  }
 
-.input-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
+  #cadastroBtn:hover {
+    background: #16a34a;
+  }
 
-input, select, button {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #334155;
-  font-size: 15px;
-  background: #0f172a;
-  color: #e2e8f0;
-  transition: border 0.3s, background 0.3s;
-}
+  /* ===== ERROS E RODAPÉ ===== */
+  .error {
+    color: #f87171;
+    font-size: 14px;
+    margin-top: 8px;
+    min-height: 18px;
+  }
 
-input:focus, select:focus {
-  border-color: #3b82f6;
-  outline: none;
-  background: #1e293b;
-}
+  footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #94a3b8;
+  }
 
-button {
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
-}
+  /* ===== FORMULÁRIOS ===== */
+  .form {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    padding: 0 20px;
+    transform: translateY(-50%);
+    transition: all 0.6s ease;
+    opacity: 0;
+  }
 
-button:hover {
-  background-color: #2563eb;
-}
+  #loginForm {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
 
-/* ===== ABAS ===== */
-.tab-content {
-  display: none;
-}
+  #cadastroForm {
+    transform: translateY(-50%) translateX(100%);
+  }
 
-.tab-content.active {
-  display: block;
-  animation: fadeIn 0.5s ease;
-}
+  .show-login #loginForm {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+  .show-login #cadastroForm {
+    opacity: 0;
+    transform: translateY(-50%) translateX(100%);
+  }
 
-/* ===== LISTAS ===== */
-ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 10px;
-}
+  .show-cadastro #loginForm {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-100%);
+  }
 
-ul li {
-  background: #334155;
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #475569;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #f1f5f9;
-}
+  .show-cadastro #cadastroForm {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
 
-ul li small {
-  color: #94a3b8;
-  margin-left: 10px;
-  font-size: 0.85em;
-}
+  /* ===== ANIMAÇÃO DE ENTRADA ===== */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-/* ===== BOTÕES ESPECIAIS ===== */
-.btn-exportar {
-  background: #10b981;
-  margin-top: 10px;
-  transition: background 0.3s;
-}
+  .container {
+    animation: fadeIn 0.8s ease;
+  }
 
-.btn-exportar:hover {
-  background: #059669;
-}
-
-/* ===== TRANSIÇÕES ===== */
-body {
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
-body.loaded {
-  opacity: 1;
-}
-
-/* ===== SCROLLBAR PERSONALIZADA ===== */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #1e293b;
-}
-::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #3b82f6;
-}
-
-
+  /* ===== RESPONSIVIDADE ===== */
+  @media (max-width: 480px) {
+    .container {
+      padding: 30px 20px;
+      min-height: 400px;
+    }
+  }
+</style>
