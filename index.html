@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fluxium - Caixa Diário</title>
-  <link rel="stylesheet" href="index.css">
+
+  <!-- Remove o favicon 404 -->
+  <link rel="icon" href="data:," />
+
+  <!-- CSS e bibliotecas -->
+  <link rel="stylesheet" href="index.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -30,7 +35,7 @@
       justify-content: space-between;
       padding: 20px 0;
       border-right: 1px solid #334155;
-      box-shadow: 4px 0 10px rgba(0,0,0,0.3);
+      box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
       position: fixed;
       left: 0;
       top: 0;
@@ -130,13 +135,19 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
       animation: fadeDown 1s ease;
     }
 
     @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .welcome-left {
@@ -155,15 +166,15 @@
     }
 
     .clock {
-      font-family: 'Consolas', monospace;
+      font-family: "Consolas", monospace;
       font-size: 16px;
       font-weight: 600;
       color: #f8fafc;
-      background: rgba(0,0,0,0.2);
+      background: rgba(0, 0, 0, 0.2);
       padding: 8px 14px;
       border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 0 6px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
@@ -177,15 +188,27 @@
   <aside class="sidebar">
     <div>
       <div class="logo">
-        <svg viewBox="0 0 100 100"><path d="M50 5L90 25V75L50 95L10 75V25Z" /></svg>
+        <svg viewBox="0 0 100 100">
+          <path d="M50 5L90 25V75L50 95L10 75V25Z" />
+        </svg>
         <span class="logo-text">Fluxium</span>
       </div>
       <div class="menu">
-        <button class="tab-btn active" data-tab="inicio"><i data-lucide="home"></i> Início</button>
-        <button class="tab-btn" data-tab="registrar"><i data-lucide="plus-circle"></i> Registrar</button>
-        <button class="tab-btn" data-tab="fechamento"><i data-lucide="file-text"></i> Fechamento</button>
-        <button class="tab-btn" data-tab="historico"><i data-lucide="clock"></i> Histórico</button>
-        <button class="tab-btn" data-tab="semanal"><i data-lucide="calendar"></i> Semanal</button>
+        <button class="tab-btn active" data-tab="inicio">
+          <i data-lucide="home"></i> Início
+        </button>
+        <button class="tab-btn" data-tab="registrar">
+          <i data-lucide="plus-circle"></i> Registrar
+        </button>
+        <button class="tab-btn" data-tab="fechamento">
+          <i data-lucide="file-text"></i> Fechamento
+        </button>
+        <button class="tab-btn" data-tab="historico">
+          <i data-lucide="clock"></i> Histórico
+        </button>
+        <button class="tab-btn" data-tab="semanal">
+          <i data-lucide="calendar"></i> Semanal
+        </button>
       </div>
     </div>
 
@@ -209,7 +232,7 @@
     <section id="inicio" class="tab-content active">
       <h2>Início do Expediente</h2>
       <div class="input-group">
-        <input type="number" id="valorInicial" placeholder="Ex: 100.00">
+        <input type="number" id="valorInicial" placeholder="Ex: 100.00" />
         <button id="confirmarCaixa">Confirmar Caixa Inicial</button>
       </div>
       <ul id="listaLancamentos"></ul>
@@ -219,13 +242,13 @@
     <section id="registrar" class="tab-content">
       <h2>Registrar Entrada</h2>
       <div class="input-group">
-        <input type="number" id="valorRecebido" placeholder="Valor recebido (R$)">
+        <input type="number" id="valorRecebido" placeholder="Valor recebido (R$)" />
         <select id="formaPagamento">
           <option>Dinheiro</option>
           <option>Pix</option>
           <option>Cartão</option>
         </select>
-        <input type="number" id="valorTroco" placeholder="Troco (R$)">
+        <input type="number" id="valorTroco" placeholder="Troco (R$)" />
         <button id="adicionarEntrada">Adicionar</button>
       </div>
     </section>
@@ -248,6 +271,7 @@
     </section>
   </main>
 
+  <!-- Script principal -->
   <script type="module" src="index.js"></script>
 
   <script>
@@ -270,7 +294,11 @@
       const clock = document.getElementById("clock");
 
       welcomeText.textContent = `${saudacao}, ${usuario.charAt(0).toUpperCase() + usuario.slice(1)} 👋`;
-      welcomeTime.textContent = `Hoje é ${data.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" })}`;
+      welcomeTime.textContent = `Hoje é ${data.toLocaleDateString("pt-BR", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+      })}`;
 
       function atualizarRelogio() {
         const agora = new Date();
@@ -285,4 +313,3 @@
   </script>
 </body>
 </html>
-
