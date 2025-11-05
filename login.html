@@ -25,26 +25,17 @@
       opacity: 1;
     }
 
-    .login-container {
+    .container {
       background: #1e293b;
       padding: 40px;
       border-radius: 12px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
       width: 100%;
-      max-width: 360px;
+      max-width: 380px;
       text-align: center;
-      animation: fadeUp 0.8s ease;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s ease;
     }
 
     h1 {
@@ -90,13 +81,23 @@
       background: #2563eb;
     }
 
+    #goCadastroBtn, #goLoginBtn {
+      background: transparent;
+      color: #60a5fa;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: underline;
+    }
+
     #cadastroBtn {
-      background: #475569;
-      color: #e2e8f0;
+      background: #22c55e;
+      color: white;
     }
 
     #cadastroBtn:hover {
-      background: #334155;
+      background: #16a34a;
     }
 
     .error {
@@ -112,27 +113,75 @@
       font-size: 13px;
       color: #94a3b8;
     }
+
+    /* Transição entre telas */
+    .form {
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      position: absolute;
+      top: 40px;
+      width: 100%;
+      left: 0;
+    }
+
+    #cadastroForm {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
+    .show-login #loginForm {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .show-login #cadastroForm {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
+    .show-cadastro #loginForm {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    .show-cadastro #cadastroForm {
+      transform: translateX(0);
+      opacity: 1;
+    }
   </style>
 </head>
 
 <body>
-  <div class="login-container">
-    <h1>Fluxium</h1>
-    <input type="email" id="email" placeholder="E-mail" required />
-    <input type="password" id="senha" placeholder="Senha" required />
-    <button id="loginBtn">Entrar</button>
-    <button id="cadastroBtn">Cadastrar</button>
-    <div class="error" id="errorMsg"></div>
-    <footer>© 2025 Fluxium. Todos os direitos reservados.</footer>
+  <div class="container show-login" id="formContainer">
+    <!-- LOGIN -->
+    <div class="form" id="loginForm">
+      <h1>Fluxium</h1>
+      <input type="email" id="emailLogin" placeholder="E-mail" required />
+      <input type="password" id="senhaLogin" placeholder="Senha" required />
+      <button id="loginBtn">Entrar</button>
+      <button id="goCadastroBtn">Ainda não tem conta? Cadastrar</button>
+      <div class="error" id="errorLogin"></div>
+      <footer>© 2025 Fluxium</footer>
+    </div>
+
+    <!-- CADASTRO -->
+    <div class="form" id="cadastroForm">
+      <h1>Cadastro</h1>
+      <input type="email" id="emailCadastro" placeholder="E-mail" required />
+      <input type="password" id="senhaCadastro" placeholder="Senha" required />
+      <button id="cadastroBtn">Cadastrar</button>
+      <button id="goLoginBtn">Já tem conta? Entrar</button>
+      <div class="error" id="errorCadastro"></div>
+      <footer>© 2025 Fluxium</footer>
+    </div>
   </div>
 
-  <!-- Firebase + Script principal -->
+  <!-- Firebase e lógica -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
       from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
-    // 🔹 Configuração do seu Firebase (mesma usada no index.js)
+    // Configuração Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCxdkQYeq5P5DSoB9hSLP7GzBXOD9ovgXw",
       authDomain: "fluxium-abcaf.firebaseapp.com",
@@ -146,22 +195,32 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Fade-in inicial
+    // Fade-in
     window.addEventListener("load", () => document.body.classList.add("loaded"));
 
-    const emailInput = document.getElementById("email");
-    const senhaInput = document.getElementById("senha");
-    const loginBtn = document.getElementById("loginBtn");
-    const cadastroBtn = document.getElementById("cadastroBtn");
-    const errorMsg = document.getElementById("errorMsg");
+    const container = document.getElementById("formContainer");
+    const goCadastroBtn = document.getElementById("goCadastroBtn");
+    const goLoginBtn = document.getElementById("goLoginBtn");
 
-    // 🔹 Função de login
-    loginBtn.addEventListener("click", async () => {
-      const email = emailInput.value.trim();
-      const senha = senhaInput.value.trim();
+    // Alternar telas
+    goCadastroBtn.addEventListener("click", () => {
+      container.classList.remove("show-login");
+      container.classList.add("show-cadastro");
+    });
+
+    goLoginBtn.addEventListener("click", () => {
+      container.classList.remove("show-cadastro");
+      container.classList.add("show-login");
+    });
+
+    // Login
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const email = document.getElementById("emailLogin").value.trim();
+      const senha = document.getElementById("senhaLogin").value.trim();
+      const error = document.getElementById("errorLogin");
 
       if (!email || !senha) {
-        errorMsg.textContent = "Preencha todos os campos.";
+        error.textContent = "Preencha todos os campos.";
         return;
       }
 
@@ -169,33 +228,36 @@
         await signInWithEmailAndPassword(auth, email, senha);
         localStorage.setItem("usuarioAtual", email);
         document.body.style.opacity = "0";
-        setTimeout(() => (window.location.href = "index.html"), 800);
-      } catch (error) {
-        errorMsg.textContent = "❌ Usuário ou senha incorretos.";
-        console.error("Erro ao logar:", error);
+        setTimeout(() => (window.location.href = "index.html"), 700);
+      } catch (err) {
+        error.textContent = "❌ Usuário ou senha incorretos.";
       }
     });
 
-    // 🔹 Função de cadastro
-    cadastroBtn.addEventListener("click", async () => {
-      const email = emailInput.value.trim();
-      const senha = senhaInput.value.trim();
+    // Cadastro
+    document.getElementById("cadastroBtn").addEventListener("click", async () => {
+      const email = document.getElementById("emailCadastro").value.trim();
+      const senha = document.getElementById("senhaCadastro").value.trim();
+      const error = document.getElementById("errorCadastro");
 
       if (!email || !senha) {
-        errorMsg.textContent = "Preencha todos os campos.";
+        error.textContent = "Preencha todos os campos.";
         return;
       }
 
       try {
         await createUserWithEmailAndPassword(auth, email, senha);
-        errorMsg.textContent = "✅ Usuário cadastrado com sucesso!";
-        errorMsg.style.color = "#4ade80";
-      } catch (error) {
-        console.error("Erro ao cadastrar:", error);
-        errorMsg.textContent = "⚠️ Erro ao cadastrar usuário.";
+        error.textContent = "✅ Usuário cadastrado com sucesso!";
+        error.style.color = "#4ade80";
+        setTimeout(() => {
+          container.classList.remove("show-cadastro");
+          container.classList.add("show-login");
+        }, 1000);
+      } catch (err) {
+        console.error("Erro ao cadastrar:", err);
+        error.textContent = "⚠️ Erro ao cadastrar usuário.";
       }
     });
   </script>
 </body>
 </html>
-
