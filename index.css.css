@@ -1,0 +1,198 @@
+/* ======= FLUXIUM DARK MINIMAL ======= */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* ===== CABEÇALHO ===== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e293b;
+  padding: 10px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #334155;
+}
+
+header h1 {
+  font-size: 20px;
+  color: #60a5fa;
+  letter-spacing: 1px;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+}
+
+.tab-btn {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+.tab-btn.active {
+  background: #3b82f6;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+.logout-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+/* ===== CONTEÚDO ===== */
+main {
+  max-width: 800px;
+  margin: 20px auto;
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  border: 1px solid #334155;
+}
+
+h2 {
+  margin-bottom: 15px;
+  border-left: 4px solid #3b82f6;
+  padding-left: 10px;
+  color: #e2e8f0;
+}
+
+.input-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+input, select, button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  font-size: 15px;
+  background: #0f172a;
+  color: #e2e8f0;
+  transition: border 0.3s, background 0.3s;
+}
+
+input:focus, select:focus {
+  border-color: #3b82f6;
+  outline: none;
+  background: #1e293b;
+}
+
+button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #2563eb;
+}
+
+/* ===== ABAS ===== */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== LISTAS ===== */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+ul li {
+  background: #334155;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f1f5f9;
+}
+
+ul li small {
+  color: #94a3b8;
+  margin-left: 10px;
+  font-size: 0.85em;
+}
+
+/* ===== BOTÕES ESPECIAIS ===== */
+.btn-exportar {
+  background: #10b981;
+  margin-top: 10px;
+  transition: background 0.3s;
+}
+
+.btn-exportar:hover {
+  background: #059669;
+}
+
+/* ===== TRANSIÇÕES ===== */
+body {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+body.loaded {
+  opacity: 1;
+}
+
+/* ===== SCROLLBAR PERSONALIZADA ===== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+

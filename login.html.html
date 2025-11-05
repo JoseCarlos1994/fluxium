@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fluxium - Acesso</title>
+  <style>
+    /* ======= FLUXIUM DARK MINIMAL ======= */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    body.loaded {
+      opacity: 1;
+    }
+
+    /* ======= ANIMAÇÃO DO FUNDO ======= */
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    body {
+      background: linear-gradient(-45deg, #0f172a, #1e293b, #1e3a8a, #0f172a);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
+    }
+
+    /* ===== CONTAINER LOGIN ===== */
+    .container-login {
+      width: 380px;
+      height: 470px;
+      background: rgba(30, 41, 59, 0.95);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid #334155;
+      backdrop-filter: blur(8px);
+    }
+
+    .forms-wrapper {
+      display: flex;
+      width: 200%;
+      height: 100%;
+      transition: transform 0.6s ease;
+    }
+
+    .form-box {
+      width: 50%;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    /* ===== LOGO FLUXIUM ===== */
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      animation: fadeInLogo 1.2s ease;
+    }
+    @keyframes fadeInLogo {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .logo svg {
+      width: 55px;
+      height: 55px;
+      fill: #3b82f6;
+      margin-right: 10px;
+    }
+    .logo-text {
+      font-size: 24px;
+      color: #60a5fa;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .welcome {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 15px;
+      margin-bottom: 20px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      outline: none;
+      font-size: 15px;
+      background: #0f172a;
+      color: #e2e8f0;
+      transition: border 0.3s, background 0.3s;
+    }
+    input:focus {
+      border-color: #3b82f6;
+      background: #1e293b;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+
+    .switch-text {
+      text-align: center;
+      font-size: 14px;
+      color: #94a3b8;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .switch-text:hover {
+      color: #3b82f6;
+    }
+
+    .error {
+      color: #ef4444;
+      text-align: center;
+      height: 20px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    /* Fade ao trocar de tela */
+    .fade-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Fade-in suave ao carregar
+    window.addEventListener("load", () => {
+      document.body.classList.add("loaded");
+    });
+  </script>
+
+  <div class="container-login">
+    <div class="forms-wrapper" id="formsWrapper">
+      <!-- LOGIN -->
+      <div class="form-box" id="loginForm">
+        <div class="logo">
+          <svg viewBox="0 0 100 100">
+            <path d="M50 5L90 25V75L50 95L10 75V25Z" />
+          </svg>
+          <span class="logo-text">Fluxium</span>
+        </div>
+        <p class="welcome" id="welcomeText">Bem-vindo(a) de volta!</p>
+
+        <input type="text" id="loginUsuario" placeholder="Usuário">
+        <input type="password" id="loginSenha" placeholder="Senha">
+        <p id="loginErro" class="error"></p>
+        <button id="entrarBtn">Entrar</button>
+        <p class="switch-text" id="irParaCadastro">Não tem conta? Cadastre-se →</p>
+      </div>
+
+      <!-- CADASTRO -->
+      <div class="form-box" id="cadastroForm">
+        <div class="logo">
+          <svg viewBox="0 0 100 100">
+            <path d="M50 5L90 25V75L50 95L10 75V25Z" />
+          </svg>
+          <span class="logo-text">Fluxium</span>
+        </div>
+        <p class="welcome">Crie sua conta para começar!</p>
+
+        <input type="text" id="novoUsuario" placeholder="Novo usuário">
+        <input type="password" id="novaSenha" placeholder="Nova senha">
+        <p id="cadastroErro" class="error"></p>
+        <button id="cadastrarBtn">Cadastrar</button>
+        <p class="switch-text" id="irParaLogin">← Voltar ao login</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const formsWrapper = document.getElementById("formsWrapper");
+    const irParaCadastro = document.getElementById("irParaCadastro");
+    const irParaLogin = document.getElementById("irParaLogin");
+    const loginErro = document.getElementById("loginErro");
+    const cadastroErro = document.getElementById("cadastroErro");
+    const welcomeText = document.getElementById("welcomeText");
+
+    // Saudação dinâmica
+    const hora = new Date().getHours();
+    if (hora < 12) welcomeText.textContent = "Bom dia! Pronto para começar o expediente?";
+    else if (hora < 18) welcomeText.textContent = "Boa tarde! Continue com boas vendas.";
+    else welcomeText.textContent = "Boa noite! Fechando o caixa com o Fluxium?";
+
+    // Transição lateral
+    irParaCadastro.addEventListener("click", () => {
+      formsWrapper.style.transform = "translateX(-50%)";
+    });
+    irParaLogin.addEventListener("click", () => {
+      formsWrapper.style.transform = "translateX(0%)";
+    });
+
+    // Fade suave antes de redirecionar
+    function fadeOutAndRedirect(url) {
+      const fadeDiv = document.createElement("div");
+      fadeDiv.classList.add("fade-overlay");
+      document.body.appendChild(fadeDiv);
+      setTimeout(() => (fadeDiv.style.opacity = 1), 50);
+      setTimeout(() => {
+        window.location.href = url;
+      }, 800);
+    }
+
+    // Login
+    document.getElementById("entrarBtn").addEventListener("click", () => {
+      const usuario = document.getElementById("loginUsuario").value.trim();
+      const senha = document.getElementById("loginSenha").value.trim();
+
+      const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+      const user = usuarios.find(u => u.usuario === usuario && u.senha === senha);
+
+      if (user) {
+        localStorage.setItem("autenticado", "true");
+        localStorage.setItem("usuarioAtual", usuario);
+        fadeOutAndRedirect("index.html");
+      } else {
+        loginErro.textContent = "Usuário ou senha incorretos!";
+      }
+    });
+
+    // Cadastro
+    document.getElementById("cadastrarBtn").addEventListener("click", () => {
+      const novoUsuario = document.getElementById("novoUsuario").value.trim();
+      const novaSenha = document.getElementById("novaSenha").value.trim();
+      let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+      if (!novoUsuario || !novaSenha) {
+        cadastroErro.textContent = "Preencha todos os campos!";
+        return;
+      }
+
+      if (usuarios.find(u => u.usuario === novoUsuario)) {
+        cadastroErro.textContent = "Usuário já cadastrado!";
+        return;
+      }
+
+      usuarios.push({ usuario: novoUsuario, senha: novaSenha });
+      localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+      cadastroErro.style.color = "#10b981";
+      cadastroErro.textContent = "Cadastro realizado com sucesso!";
+      setTimeout(() => {
+        formsWrapper.style.transform = "translateX(0%)";
+        cadastroErro.textContent = "";
+        cadastroErro.style.color = "#ef4444";
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
